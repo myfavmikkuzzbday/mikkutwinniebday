@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Solar System with Clickable Planets for Mikku</title>
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    background-color: black;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .container {
+    font-size: 6px;
+    width: 40em;
+    height: 40em;
+    position: relative;
+    z-index: 10;
+  }
+
+  img {
+    height: 130%;
+    width: 130%;
+  }
+
+  .sun {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 15em;
+    left: 15em;
+    width: 10em;
+    height: 10em;
+    border-radius: 50%;
+    box-shadow: 0 0 3em rgb(255, 128, 0);
+    animation: orbit 50s linear infinite;
+    cursor: pointer;
+    background: radial-gradient(circle at center, #ffcc33 0%, #ff9900 70%, #cc6600 100%);
+    z-index: 20;
+  }
+
+  .mercury,
+  .venus,
+  .earth,
+  .moon,
+  .mars,
+  .jupiter,
+  .saturn,
+  .uranus,
+  .neptune,
+  .pluto {
+    position: absolute;
+    border-style: solid;
+    border-color: white transparent transparent transparent;
+    border-width: 0.1em 0.1em 0 0;
+    border-radius: 50%;
+  }
+
+  .mercury {
+    top: 12.5em;
+    left: 12.5em;
+    width: 15em;
+    height: 15em;
+    animation: orbit 68.7s linear infinite;
+  }
+  .venus {
+    top: 10em;
+    left: 10em;
+    width: 20em;
+    height: 20em;
+    animation: orbit 48.7s linear infinite;
+  }
+  .earth {
+    top: 6em;
+    left: 6em;
+    width: 28em;
+    height: 28em;
+    animation: orbit 36.5s linear infinite;
+  }
+  .moon {
+    top: 0.8em;
+    right: 0.2em;
+    width: 7em;
+    height: 7em;
+    animation: orbit 2.7s linear infinite;
+  }
+  .mars {
+    top: 2em;
+    left: 2.5em;
+    width: 36em;
+    height: 36em;
+    animation: orbit 26.5s linear infinite;
+  }
+  .jupiter {
+    top: -2em;
+    left: -2em;
+    width: 45em;
+    height: 45em;
+    animation: orbit 21s linear infinite;
+  }
+  .saturn {
+    top: -7em;
+    left: -7em;
+    width: 55em;
+    height: 55em;
+    animation: orbit 25s linear infinite;
+  }
+  .uranus {
+    top: -12em;
+    left: -12em;
+    width: 65em;
+    height: 65em;
+    animation: orbit 30s linear infinite;
+  }
+  .neptune {
+    top: -17em;
+    left: -17em;
+    width: 75em;
+    height: 75em;
+    animation: orbit 31s linear infinite;
+  }
+  .pluto {
+    top: -22em;
+    left: -22em;
+    width: 85em;
+    height: 85em;
+    animation: orbit 33s linear infinite;
+  }
+
+  .mercury,
+  .venus,
+  .earth,
+  .moon,
+  .mars,
+  .jupiter,
+  .saturn,
+  .uranus,
+  .neptune,
+  .pluto {
+    pointer-events: none;
+  }
+
+  .mercury::before,
+  .venus::before,
+  .earth::before,
+  .moon::before,
+  .mars::before,
+  .jupiter::before,
+  .saturn::before,
+  .uranus::before,
+  .neptune::before,
+  .pluto::before {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: auto;
+    cursor: pointer;
+  }
+  .mercury::before {
+    top: 1.5em;
+    right: 0.8em;
+    width: 2em;
+    height: 2em;
+    background-image: url('./images/mercury.png');
+    background-size: cover;
+  }
+  .venus::before {
+    top: 2em;
+    right: 2em;
+    width: 2em;
+    height: 2em;
+    background-image: url('./images/venus.png');
+    background-size: cover;
+  }
+  .earth::before {
+    top: 3em;
+    right: 0em;
+    width: 5em;
+    height: 5em;
+    background-image: url('./images/earth.png');
+    background-size: cover;
+  }
+  .moon::before {
+    top: 0.8em;
+    right: 0.2em;
+    width: 1.2em;
+    height: 1.2em;
+    background-image: url('./images/moon.png');
+    background-size: cover;
+    pointer-events: none;
+    cursor: default;
+  }
+  .mars::before {
+    top: 5em;
+    right: 3em;
+    width: 3em;
+    height: 3em;
+    background-image: url('./images/mars.png');
+    background-size: cover;
+  }
+  .jupiter::before {
+    top: 6em;
+    right: 3em;
+    width: 5em;
+    height: 5em;
+    background-image: url('./images/jupiter.png');
+    background-size: cover;
+  }
+  .saturn::before {
+    top: 7.5em;
+    right: 5em;
+    width: 4.5em;
+    height: 4.5em;
+    background-image: url('./images/saturn.png');
+    background-size: cover;
+  }
+  .uranus::before {
+    top: 9em;
+    right: 6.5em;
+    width: 4em;
+    height: 4em;
+    background-image: url('./images/uranus.png');
+    background-size: cover;
+  }
+  .neptune::before {
+    top: 10em;
+    right: 8em;
+    width: 4em;
+    height: 4em;
+    background-image: url('./images/neptune.png');
+    background-size: cover;
+  }
+  .pluto::before {
+    top: 11em;
+    right: 10em;
+    width: 4em;
+    height: 4em;
+    background-image: url('./images/pluto.png');
+    background-size: cover;
+  }
+
+  @keyframes orbit {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  #planetPopup {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.8);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+  }
+  #planetPopup .popup-content {
+    background: #222;
+    color: white;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 350px;
+    text-align: center;
+    position: relative;
+  }
+  #planetPopup .popup-content img {
+    max-width: 100%;
+    border-radius: 6px;
+    margin-top: 10px;
+  }
+  #planetPopup .close {
+    position: absolute;
+    top: 8px; right: 12px;
+    font-size: 24px;
+    cursor: pointer;
+  }
+
+  #musicPlayer {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 10000;
+  }
+
+  #stars-container {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  .star {
+    position: absolute;
+    background-color: white;
+    border-radius: 50%;
+    opacity: 0.8;
+    animation: twinkle 3s infinite alternate;
+    box-shadow: none;
+  }
+
+  @keyframes twinkle {
+    0% { opacity: 0.3; }
+    100% { opacity: 1; }
+  }
+
+  #comets {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 1;
+    overflow: visible;
+  }
+
+  .comet {
+    position: absolute;
+    width: 3px;
+    height: 100px;
+    background: linear-gradient(to bottom, white, transparent);
+    filter: drop-shadow(0 0 6px white);
+    border-radius: 100% / 100%;
+    opacity: 0.8;
+    animation-name: fly;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+
+  @keyframes fly {
+    0% {
+      transform: translateX(100vw) translateY(-50vh) rotate(45deg);
+      opacity: 0;
+    }
+    10% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateX(-100vw) translateY(50vh) rotate(45deg);
+      opacity: 0;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div id="stars-container"></div>
+
+<div id="comets"></div>
+
+<div class="container">
+  <div class="sun" id="sun"></div>
+  <div class="mercury"></div>
+  <div class="venus"></div>
+  <div class="earth"></div>
+  <div class="moon"></div>
+  <div class="mars"></div>
+  <div class="jupiter"></div>
+  <div class="saturn"></div>
+  <div class="uranus"></div>
+  <div class="neptune"></div>
+  <div class="pluto"></div>
+</div>
+
+<div id="planetPopup">
+  <div class="popup-content">
+    <span class="close">&times;</span>
+    <h2 id="planetTitle"></h2>
+    <p id="planetDescription"></p>
+    <img id="planetImage" src="" alt="" />
+  </div>
+</div>
+
+<audio id="musicPlayer" controls loop>
+  <source src="ATSH.mp3.mp3" type="audio/mpeg" />
+  Your browser does not support the audio element.
+</audio>
+
+<script>
+  const starsContainer = document.getElementById('stars-container');
+  starsContainer.innerHTML = '';
+
+  for (let i = 0; i < 150; i++) {
+    const star = document.createElement('div');
+    star.classList.add('star');
+    star.style.top = Math.random() * 100 + 'vh';
+    star.style.left = Math.random() * 100 + 'vw';
+    const size = Math.random() * 1 + 0.5; // 0.5 to 1.5 px
+    star.style.width = size + 'px';
+    star.style.height = size + 'px';
+    star.style.animationDelay = (Math.random() * 3) + 's';
+    starsContainer.appendChild(star);
+  }
+
+  const cometsContainer = document.getElementById('comets');
+  const cometCount = 5;
+
+  for (let i = 0; i < cometCount; i++) {
+    const comet = document.createElement('div');
+    comet.classList.add('comet');
+    comet.style.top = Math.random() * 100 + 'vh';
+    comet.style.left = Math.random() * 100 + 'vw';
+    comet.style.animationDuration = (5 + Math.random() * 5) + 's';
+    comet.style.animationDelay = (i * 3) + 's';
+    cometsContainer.appendChild(comet);
+  }
+
+  const planetsData = {
+  sun: {
+    title: "Mikku - My Shining Star",
+    description: "Ever since you have come into my life, it has been the brightest. I am really grateful for you...",
+    image: "shiningmikku.jpg"
+  },
+  mercury: {
+    title: "Our First Meeting",
+    description: "Coincidentially, as if destined by God, we met that day. I knew from the beginning that you would become the best part of my life.",
+    image: "childmikku.jpg"
+  },
+  venus: {
+    title: "Yappathon",
+    description: "The first day itself we talked, a lot actually. 1:30 hours, never in my life. It was as if I had gotten THE BEST friend FOR LIFE.",
+    image: "mikkzgaze.png"
+  },
+  earth: {
+    title: "Your Interests and My Diary",
+    description: "For the first time ever, I started writing notes for a specific person. I wanted to get to know you better, and so I wrote down everything. Poems became targeted to a single person. Started creating websites for this person. What even, we even know each other blood group and most and least favourite candies.",
+    image: "uscore.png"
+  },
+  mars: {
+    title: "Random Stranger to Most Important",
+    description: "What started as a Hi, resulted in me being sad if we didn't talk for even a single day. Inseparable duo ig?? Even during my school trip, I only ever wanted to talk with you besides family.",
+    image: "mikkzimp.png"
+  },
+  jupiter: {
+    title: "Our Fight",
+    description: "AHHH- fights. Bad, but essential for a strong connection I suppose. Let's just say I was a fool to become overpossessive and in the end, said a lot of badwords. But we both suffered, and suffered to the point I felt as a dead corpse still breathing because my literal twin was away from me now.",
+    image: "angrymikku.png"
+  },
+  saturn: {
+    title: "Reuniting and Desires Flamin' Again",
+    description: "Well they say, what God has made, man cannot break. ANd then and thus, we came back stronger, and mutually understanding. Again with the common ambition of becoming neurosurgeons and making both our families interchangeable proud - a daughter for mine and a son for your's - away fom home.",
+    image: "reunite.png"
+  },
+  uranus: {
+    title: "Our Goofiness",
+    description: "You are a goofy aah girl ngl.. very silly willy. Your favourites? Yeah, KitKats... and you are my KitKat bytheway 🤭",
+    image: "sillymikku.png"
+  },
+  neptune: {
+    title: "Thankful for Being My Friend",
+    description: "I cannot express in words how much I luv you. Thank you so much. You are my favourite person in this whole entire world, and NOBODY and NOTHING can ever change that.",
+    image: "mikkz&car.png"
+  },
+  pluto: {
+    title: "Let the Worlds Part, But We Shall Not",
+    description: "And yes, we shall not. All I ever hope is, even after having our own families, we both dont forget each other. I will never leave your side till death.",
+    image: "mikkzgoddess.png"
+  }
+};
+
+  const popup = document.getElementById('planetPopup');
+  const popupTitle = document.getElementById('planetTitle');
+  const popupDescription = document.getElementById('planetDescription');
+  const popupImage = document.getElementById('planetImage');
+  const popupClose = document.querySelector('#planetPopup .close');
+
+  function showPopup(planetKey) {
+    const data = planetsData[planetKey];
+    if (!data) return;
+
+    popupTitle.textContent = data.title;
+    popupDescription.textContent = data.description;
+    popupImage.src = data.image;
+    popup.style.display = 'flex';
+  }
+
+  popupClose.addEventListener('click', () => {
+    popup.style.display = 'none';
+  });
+
+  popup.addEventListener('click', e => {
+    if (e.target === popup) {
+      popup.style.display = 'none';
+    }
+  });
+
+  document.querySelector('.sun').addEventListener('click', () => showPopup('sun'));
+  document.querySelector('.mercury').addEventListener('click', () => showPopup('mercury'));
+  document.querySelector('.venus').addEventListener('click', () => showPopup('venus'));
+  document.querySelector('.earth').addEventListener('click', () => showPopup('earth'));
+  document.querySelector('.mars').addEventListener('click', () => showPopup('mars'));
+  document.querySelector('.jupiter').addEventListener('click', () => showPopup('jupiter'));
+  document.querySelector('.saturn').addEventListener('click', () => showPopup('saturn'));
+  document.querySelector('.uranus').addEventListener('click', () => showPopup('uranus'));
+  document.querySelector('.neptune').addEventListener('click', () => showPopup('neptune'));
+  document.querySelector('.pluto').addEventListener('click', () => showPopup('pluto'));
+
+</script>
+
+</body>
+</html>
